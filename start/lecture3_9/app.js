@@ -37,10 +37,9 @@ class App {
     this.controls.update();
 
     this.stats = new Stats();
-    document.body.appendChild(this.stats.dom);
 
     this.initScene();
-    this.setupXR();
+    this.setupVR();
 
     window.addEventListener("resize", this.resize.bind(this));
   }
@@ -50,7 +49,7 @@ class App {
     this.meshes = [];
   }
 
-  setupXR() {
+  setupVR() {
     this.renderer.xr.enabled = true;
 
     const self = this;
@@ -62,7 +61,7 @@ class App {
       });
       const mesh = new THREE.Mesh(self.geometry, material);
       mesh.position.set(0, 0, -0.3).applyMatrix4(controller.matrixWorld);
-      mesh.quaternion.set(controller.matrixWorld);
+      mesh.quaternion.setFromRotationMatrix(controller.matrixWorld);
       self.scene.add(mesh);
       self.meshes.push(mesh);
     }
