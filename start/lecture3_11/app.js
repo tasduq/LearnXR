@@ -69,6 +69,7 @@ class App {
       `burger.glb`,
       // called when the resource is loaded
       function (gltf) {
+        console.log(gltf);
         // const object = gltf.scene.children[5];
 
         // object.traverse(function (child) {
@@ -118,7 +119,7 @@ class App {
 
         self.loadingBar.visible = false;
 
-        self.renderer.setAnimationLoop(self.render.bind(self));
+        // self.renderer.setAnimationLoop(self.render.bind(self));
       },
       // called while loading is progressing
       function (xhr) {
@@ -126,7 +127,7 @@ class App {
       },
       // called when loading has errors
       function (error) {
-        console.log("An error happened");
+        console.log("An error happened", error);
       }
     );
 
