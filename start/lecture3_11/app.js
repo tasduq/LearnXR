@@ -119,13 +119,18 @@ class App {
             child.material.metalness = 0.2;
           }
         });
-        self.chair = gltf.scene;
+        self.model = gltf.scene;
+
+        gltf.scene.scale.multiplyScalar(1 / 100);
+        gltf.scene.position.z = -20;
+
+        gltf.scene.visible = false;
 
         const scale = 0.003;
         gltf.scene.scale.set(scale, scale, scale);
 
         // self.scene.add(gltf.scene);
-        self.scene.add(self.chair);
+        self.scene.add(self.model);
 
         self.loadingBar.visible = false;
 
@@ -180,10 +185,10 @@ class App {
     this.gestures.addEventListener("tap", (ev) => {
       //console.log( 'tap' );
       self.ui.updateElement("info", "tap");
-      if (!self.knight.object.visible) {
-        self.knight.object.visible = true;
-        self.knight.object.position.set(0, -0.3, -0.5).add(ev.position);
-        self.scene.add(self.knight.object);
+      if (!self.model.visible) {
+        self.model.visible = true;
+        self.model.position.set(0, -0.3, -0.5).add(ev.position);
+        self.scene.add(self.model);
       }
     });
     this.gestures.addEventListener("doubletap", (ev) => {
@@ -197,10 +202,10 @@ class App {
     this.gestures.addEventListener("pan", (ev) => {
       //console.log( ev );
       if (ev.initialise !== undefined) {
-        self.startPosition = self.knight.object.position.clone();
+        self.startPosition = self.model.position.clone();
       } else {
         const pos = self.startPosition.clone().add(ev.delta.multiplyScalar(3));
-        self.knight.object.position.copy(pos);
+        self.model.position.copy(pos);
         self.ui.updateElement(
           "info",
           `pan x:${ev.delta.x.toFixed(3)}, y:${ev.delta.y.toFixed(
@@ -212,18 +217,18 @@ class App {
     this.gestures.addEventListener("swipe", (ev) => {
       //console.log( ev );
       self.ui.updateElement("info", `swipe ${ev.direction}`);
-      if (self.knight.object.visible) {
-        self.knight.object.visible = false;
-        self.scene.remove(self.knight.object);
+      if (self.model.visible) {
+        self.model.visible = false;
+        self.scene.remove(self.model);
       }
     });
     this.gestures.addEventListener("pinch", (ev) => {
       //console.log( ev );
       if (ev.initialise !== undefined) {
-        self.startScale = self.knight.object.scale.clone();
+        self.startScale = self.model.scale.clone();
       } else {
         const scale = self.startScale.clone().multiplyScalar(ev.scale);
-        self.knight.object.scale.copy(scale);
+        self.model.scale.copy(scale);
         self.ui.updateElement(
           "info",
           `pinch delta:${ev.delta.toFixed(3)} scale:${ev.scale.toFixed(2)}`
@@ -233,10 +238,10 @@ class App {
     this.gestures.addEventListener("rotate", (ev) => {
       //      sconsole.log( ev );
       if (ev.initialise !== undefined) {
-        self.startQuaternion = self.knight.object.quaternion.clone();
+        self.startQuaternion = self.model.quaternion.clone();
       } else {
-        self.knight.object.quaternion.copy(self.startQuaternion);
-        self.knight.object.rotateY(ev.theta);
+        self.model.quaternion.copy(self.startQuaternion);
+        self.model.rotateY(ev.theta);
         self.ui.updateElement("info", `rotate ${ev.theta.toFixed(3)}`);
       }
     });
