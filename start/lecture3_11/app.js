@@ -66,36 +66,59 @@ class App {
     // Load a GLTF resource
     loader.load(
       // resource URL
-      `knight2.glb`,
+      `burger.glb`,
       // called when the resource is loaded
       function (gltf) {
-        const object = gltf.scene.children[5];
+        // const object = gltf.scene.children[5];
 
-        object.traverse(function (child) {
+        // object.traverse(function (child) {
+        //   if (child.isMesh) {
+        //     child.material.metalness = 0;
+        //     child.material.roughness = 1;
+        //   }
+        // });
+
+        // const options = {
+        //   object: object,
+        //   speed: 0.5,
+        //   animations: gltf.animations,
+        //   clip: gltf.animations[0],
+        //   app: self,
+        //   name: "knight",
+        //   npc: false,
+        // };
+
+        // self.knight = new Player(options);
+        // self.knight.object.visible = false;
+
+        // self.knight.action = "Dance";
+        // const scale = 0.003;
+        // self.knight.object.scale.set(scale, scale, scale);
+
+        // self.loadingBar.visible = false;
+
+        const bbox = new THREE.Box3().setFromObject(gltf.scene);
+        console.log(
+          `min:${bbox.min.x.toFixed(2)},${bbox.min.y.toFixed(
+            2
+          )},${bbox.min.z.toFixed(2)} -  max:${bbox.max.x.toFixed(
+            2
+          )},${bbox.max.y.toFixed(2)},${bbox.max.z.toFixed(2)}`
+        );
+
+        gltf.scene.traverse((child) => {
           if (child.isMesh) {
-            child.material.metalness = 0;
-            child.material.roughness = 1;
+            child.material.metalness = 0.2;
           }
         });
+        self.chair = gltf.scene;
 
-        const options = {
-          object: object,
-          speed: 0.5,
-          animations: gltf.animations,
-          clip: gltf.animations[0],
-          app: self,
-          name: "knight",
-          npc: false,
-        };
-
-        self.knight = new Player(options);
-        self.knight.object.visible = false;
-
-        self.knight.action = "Dance";
-        const scale = 0.003;
-        self.knight.object.scale.set(scale, scale, scale);
+        // self.scene.add(gltf.scene);
+        self.scene.add(self.chair);
 
         self.loadingBar.visible = false;
+
+        self.renderer.setAnimationLoop(self.render.bind(self));
       },
       // called while loading is progressing
       function (xhr) {

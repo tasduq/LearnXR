@@ -1,6 +1,6 @@
 import * as THREE from "../../libs/three/three.module.js";
 import { GLTFLoader } from "../../libs/three/jsm/GLTFLoader.js";
-import { FBXLoader } from "../../libs/three124/jsm/FBXLoader.js";
+import { FBXLoader } from "../../libs/three/jsm/FBXLoader.js";
 // import { FBXLoader } from "https://threejsfundamentals.org/threejs/resources/threejs/r119/examples/jsm/loaders/FBXLoader.js";
 import { RGBELoader } from "../../libs/three/jsm/RGBELoader.js";
 import { OrbitControls } from "../../libs/three/jsm/OrbitControls.js";
@@ -39,8 +39,8 @@ class App {
 
     this.loadingBar = new LoadingBar();
 
-    // this.loadGLTF();
-    this.loadFBX();
+    this.loadGLTF();
+    // this.loadFBX();
 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.target.set(0, 3.5, 0);
