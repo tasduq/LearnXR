@@ -121,6 +121,9 @@ class App {
         });
         self.chair = gltf.scene;
 
+        const scale = 0.03;
+        gltf.scene.scale.set(scale, scale, scale);
+
         // self.scene.add(gltf.scene);
         self.scene.add(self.chair);
 
