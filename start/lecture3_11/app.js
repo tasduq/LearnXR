@@ -1,6 +1,7 @@
 import * as THREE from "../../libs/three125/three.module.js";
 import { OrbitControls } from "../../libs/three125/OrbitControls.js";
 import { GLTFLoader } from "../../libs/three125/GLTFLoader.js";
+import { DRACOLoader } from "../../libs/three125/DRACOLoader.js";
 import { Stats } from "../../libs/stats.module.js";
 import { CanvasUI } from "../../libs/three125/CanvasUI.js";
 import { ARButton } from "../../libs/ARButton.js";
@@ -61,12 +62,18 @@ class App {
 
     this.assetsPath = "../../assets/";
     const loader = new GLTFLoader().setPath(this.assetsPath);
+
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath(
+      "https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/js/libs/draco/"
+    );
+    loader.setDRACOLoader(dracoLoader);
     const self = this;
 
     // Load a GLTF resource
     loader.load(
       // resource URL
-      `office-chair.glb`,
+      `burgercomp.glb`,
       // called when the resource is loaded
       function (gltf) {
         console.log(gltf);
