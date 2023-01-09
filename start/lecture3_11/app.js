@@ -65,7 +65,8 @@ class App {
 
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath(
-      "https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/js/libs/draco/"
+//       "https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/js/libs/draco/"
+      "https://raw.githubusercontent.com/tasduq/LearnXR/main/libs/three/js/draco/"
     );
     loader.setDRACOLoader(dracoLoader);
     const self = this;
